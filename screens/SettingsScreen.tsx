@@ -28,9 +28,14 @@ const SettingsScreen = ({ navigation }: Props) => {
   const { colors } = useTheme();
 
   const wallet = useStoreState((state) => state.wallet);
+  const wallets = useStoreState((state) => state.wallets);
+  
+  console.log(wallets);
+  
+  
   const accounts = useStoreState((state) => state.accounts);
   const [account, setAccount] = useState({});
-
+  console.log(accounts);
   const [visible, setVisible] = useState(false);
 
   const onToggleSnackBar = () => setVisible(!visible);

@@ -27,7 +27,8 @@ const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   const hasWallet = useStoreState((state) => state.hasWallet);
-
+  console.log('hasWallet',hasWallet);
+  
   if (hasWallet) {
     return (
       <Stack.Navigator>

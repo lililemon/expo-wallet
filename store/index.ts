@@ -12,8 +12,10 @@ import storage from "../storage";
 
 export interface Wallet {
   passcode: number;
-  mnemonic: string[];
-  seed: string;
+  address:string;
+  publicKey:string
+  // mnemonic: string[];
+  // seed: string;
 }
 
 export interface Account {
@@ -24,7 +26,8 @@ export interface Account {
 
 export interface WalletModel<K> {
   wallet: Generic<K>;
-  accounts: Account[];
+  // accounts: Account[];
+  wallets:Wallet[];
   hasWallet: Computed<WalletModel<K>, Wallet | false>;
   addWallet: Action<WalletModel<K>, K>;
   addDefaultAccount: Action<WalletModel<K>, K>;
@@ -35,32 +38,43 @@ const store = createStore<WalletModel>(
   persist(
     {
       wallet: generic({}),
-      accounts: [],
+      // accounts: [],
+      wallets:[],
       hasWallet: computed(
         (state) =>
-          Object.keys(state.wallet).length !== 0 && state.accounts.length !== 0
+          Object.keys(state.wallet).length !== 0 
+          // && state.accounts.length !== 0
       ),
       addWallet: action((state, payload) => {
         state.wallet = {
           passcode: payload.passcode,
-          mnemonic: payload.mnemonic,
-          seed: payload.seed,
+          address:payload.address,
+          publicKey:payload.publicKey
+          // mnemonic: payload.mnemonic,
+          // seed: payload.seed,
+          // current:true
         };
+        // state.wallets.forEach((item, index) => {
+        //     item.current = false;
+        // });
+        state.wallets.push(
+          state.wallet
+        )
       }),
-      addDefaultAccount: action((state, payload) => {
-        state.accounts.push({
-          index: 0,
-          title: "default",
-          derivationPath: "bip44Change",
-        });
-      }),
-      addAccount: action((state, payload) => {
-        state.accounts.push({
-          index: payload.index,
-          title: payload.title,
-          derivationPath: "bip44Change",
-        });
-      }),
+      // addDefaultAccount: action((state, payload) => {
+      //   state.accounts.push({
+      //     index: 0,
+      //     title: "default",
+      //     derivationPath: "bip44Change",
+      //   });
+      // }),
+      // addAccount: action((state, payload) => {
+      //   state.accounts.push({
+      //     index: payload.index,
+      //     title: payload.title,
+      //     derivationPath: "bip44Change",
+      //   });
+      // }),
     },
     {
       storage: storage,

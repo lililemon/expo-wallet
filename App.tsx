@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import "react-native-get-random-values"
+import "@ethersproject/shims"
 import { StoreProvider } from "easy-peasy";
-
 import "./global";
 
 import "react-native-url-polyfill/auto";
